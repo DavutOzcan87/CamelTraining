@@ -101,6 +101,16 @@
             <version>3.6.0</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.activemq/activemq-core -->
+        <!-- https://mvnrepository.com/artifact/org.apache.activemq/activemq-all -->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-all</artifactId>
+            <version>5.11.0.redhat-630187</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>

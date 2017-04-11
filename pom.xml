@@ -13,4 +13,12 @@
     </modules>
 
 
+    <repositories>
+        <repository>
+            <id>mvnredhat</id>
+            <name>mvn-redhat</name>
+            <url>https://maven.repository.redhat.com/ga/</url>
+        </repository>
+    </repositories>
+
 </project>
