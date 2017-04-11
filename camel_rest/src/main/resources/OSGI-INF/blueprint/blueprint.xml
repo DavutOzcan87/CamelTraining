@@ -10,16 +10,26 @@
              ">
     <bean id="serviceImplementor" class="com.cameltraining.SampleServiceImp"></bean>
 
-    <cxf:rsServer id="sampleService" address="http://localhost:8080" serviceClass="com.cameltraining.ISampleService">
+    <cxf:rsServer id="sampleService" address="http://localhost:8383" serviceClass="com.cameltraining.ISampleService">
 
     </cxf:rsServer>
 
     <camelContext id="camel-context" xmlns="http://camel.apache.org/schema/blueprint">
+        <!--<route>-->
+            <!--<from uri="cxfrs:bean:sampleService"></from>-->
+            <!--<setBody>-->
+                <!--<simple>Hello ${body[0]}</simple>-->
+            <!--</setBody>-->
+        <!--</route>-->
         <route>
-            <from uri="cxfrs:bean:sampleService"></from>
-            <setBody>
-                <simple>Hello ${body[0]}</simple>
-            </setBody>
+            <!-- use cxfrs:bean and enable the simple binding style -->
+            <from uri="cxfrs:bean:sampleService?bindingStyle=SimpleConsumer"/>
+            <!-- call the route based on the operation invoked on the REST web service -->
+            <toD uri="direct:${header.operationName}"/>
+        </route>
+        <route>
+            <from uri="direct:greet"/>
+            <bean ref="serviceImplementor" method="greet"/>
         </route>
     </camelContext>
 
