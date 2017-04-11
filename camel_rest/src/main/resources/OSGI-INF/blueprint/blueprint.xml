@@ -9,7 +9,18 @@
              http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd
              ">
     <bean id="serviceImplementor" class="com.cameltraining.SampleServiceImp"></bean>
-    <cxf:rsServer id="sampleService" address="/sampleservice" serviceClass="com.cameltraining.SampleServiceImp">
+
+    <cxf:rsServer id="sampleService" address="http://localhost:8383" serviceClass="com.cameltraining.ISampleService">
 
     </cxf:rsServer>
+
+    <camelContext id="camel-context" xmlns="http://camel.apache.org/schema/blueprint">
+        <route>
+            <from uri="cxfrs:bean:sampleService"></from>
+            <setBody>
+                <simple>Hello ${body[0]}</simple>
+            </setBody>
+        </route>
+    </camelContext>
+
 </blueprint>
