@@ -10,7 +10,7 @@
              ">
     <bean id="serviceImplementor" class="com.cameltraining.SampleServiceImp"></bean>
 
-    <cxf:rsServer id="sampleService" address="http://localhost:8383" serviceClass="com.cameltraining.ISampleService">
+    <cxf:rsServer id="sampleService" address="http://localhost:8080" serviceClass="com.cameltraining.ISampleService">
 
     </cxf:rsServer>
 

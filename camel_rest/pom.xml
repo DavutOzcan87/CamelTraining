@@ -13,8 +13,18 @@
     <properties>
         <camel-version>2.18.3</camel-version>
         <cxf-version>3.1.9</cxf-version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     <dependencies>
+        <!-- needed for OSGi testing with CXF -->
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm-all</artifactId>
+            <version>6.0_ALPHA</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-core</artifactId>
@@ -85,6 +95,12 @@
             <artifactId>log4j</artifactId>
             <scope>test</scope>
             <version>1.2.17</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>3.6.0</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
