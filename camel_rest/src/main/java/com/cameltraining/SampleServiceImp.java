@@ -10,6 +10,8 @@ public class SampleServiceImp implements ISampleService{
     }
 
     public ServiceResponse greet(String name) {
-        return of("Hello "+name);
+        String result = "Hello "+name;
+        System.out.println("greet:"+result);
+        return of(result);
     }
 }

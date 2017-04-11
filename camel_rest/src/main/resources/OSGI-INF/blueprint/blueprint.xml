@@ -9,20 +9,16 @@
              http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd
              ">
     <bean id="serviceImplementor" class="com.cameltraining.SampleServiceImp"></bean>
-
+    <!--<bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">-->
+        <!--<property name="brokerURL" value="tcp://localhost:61616"/>-->
+    <!--</bean>-->
+    <!--<bean id="console" class="com.cameltraining.ConsoleWriter"></bean>-->
     <cxf:rsServer id="sampleService" address="http://localhost:8383" serviceClass="com.cameltraining.ISampleService">
 
     </cxf:rsServer>
 
     <camelContext id="camel-context" xmlns="http://camel.apache.org/schema/blueprint">
-        <!--<route>-->
-            <!--<from uri="cxfrs:bean:sampleService"></from>-->
-            <!--<setBody>-->
-                <!--<simple>Hello ${body[0]}</simple>-->
-            <!--</setBody>-->
-        <!--</route>-->
         <route>
-            <!-- use cxfrs:bean and enable the simple binding style -->
             <from uri="cxfrs:bean:sampleService?bindingStyle=SimpleConsumer"/>
             <!-- call the route based on the operation invoked on the REST web service -->
             <toD uri="direct:${header.operationName}"/>
@@ -31,6 +27,14 @@
             <from uri="direct:greet"/>
             <bean ref="serviceImplementor" method="greet"/>
         </route>
+        <!--<route>-->
+            <!--<from uri="direct:greet"></from>-->
+            <!--<to uri="activemq:servicedata:greeting"></to>-->
+        <!--</route>-->
+        <!--<route>-->
+            <!--<from uri="activemq:servicedata:greeting"></from>-->
+            <!--<to uri="bean:console"></to>-->
+        <!--</route>-->
     </camelContext>
 
 </blueprint>

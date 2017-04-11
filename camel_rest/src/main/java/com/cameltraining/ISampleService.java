@@ -14,5 +14,6 @@ import java.awt.*;
 public interface ISampleService {
     @GET
     @Path("/hello/{name}")
+    @Produces(MediaType.APPLICATION_JSON)
     ServiceResponse greet(@PathParam("name") String name);
 }
