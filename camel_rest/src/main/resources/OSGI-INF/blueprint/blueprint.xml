@@ -14,12 +14,16 @@
         <property name="userName" value="Username" />
         <property name="password" value="Password" />
     </bean>
-    <bean id="console" class="com.cameltraining.ConsoleWriter"></bean>
-    <cxf:rsServer id="sampleService" address="http://localhost:8383" serviceClass="com.cameltraining.ISampleService">
 
+    <bean id="console" class="com.cameltraining.ConsoleWriter"></bean>
+    <bean id="jsonProvider" class="org.apache.cxf.jaxrs.provider.json.JSONProvider"/>
+    <bean id="clientServiceImp" class="com.cameltraining.ClientServiceImp"></bean>
+    <cxf:rsServer id="sampleService" address="http://localhost:8383" serviceClass="com.cameltraining.ISampleService">
     </cxf:rsServer>
-    <cxf:rsServer id="rsServer" address="http://localhost:8585/camelmocksrvice/ping">
-    </cxf:rsServer>
+    <cxf:rsClient id="rsClient"
+                  address="http://localhost:8585/camelmocksrvice"
+                    serviceClass="com.cameltraining.ClientService">
+    </cxf:rsClient>
 
     <camelContext id="camel-context" xmlns="http://camel.apache.org/schema/blueprint">
         <route>
@@ -43,7 +47,8 @@
         <route>
             <from uri="activemq:servicedata:greeting"></from>
             <process ref="console"></process>
-            <!--<to uri="bean:console?method=writeToConsole"></to>-->
+            <to uri="cxfrs:bean:rsClient"></to>
+            <bean ref="clientServiceImp" method="ping"></bean>
         </route>
     </camelContext>
 

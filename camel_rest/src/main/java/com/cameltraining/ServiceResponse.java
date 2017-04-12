@@ -1,9 +1,6 @@
 package com.cameltraining;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
 /**
  * Created by Lenovo on 4/11/2017.
@@ -15,7 +12,7 @@ public class ServiceResponse {
 
     }
 
-    @XmlAttribute(name = "message")
+    @XmlElement(name = "message")
     private String msg;
 
     public String getMsg() {
