@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/CamelTraining.iml" filepath="$PROJECT_DIR$/CamelTraining.iml" />
       <module fileurl="file://$PROJECT_DIR$/camel_rest/camel_rest.iml" filepath="$PROJECT_DIR$/camel_rest/camel_rest.iml" />
       <module fileurl="file://C:\Projects\CamelTraining\camel_rest\camel_rest (1).iml" filepath="C:\Projects\CamelTraining\camel_rest\camel_rest (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/camel_rest_client/camel_rest_client.iml" filepath="$PROJECT_DIR$/camel_rest_client/camel_rest_client.iml" />
       <module fileurl="file://$PROJECT_DIR$/camel_route_test/camel_route_test.iml" filepath="$PROJECT_DIR$/camel_route_test/camel_route_test.iml" />
     </modules>
   </component>
