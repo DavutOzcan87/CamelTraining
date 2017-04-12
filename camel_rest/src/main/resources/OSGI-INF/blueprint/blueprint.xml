@@ -18,6 +18,7 @@
     <bean id="console" class="com.cameltraining.ConsoleWriter"></bean>
     <bean id="jsonProvider" class="org.apache.cxf.jaxrs.provider.json.JSONProvider"/>
     <bean id="clientServiceImp" class="com.cameltraining.ClientServiceImp"></bean>
+    <bean id="jmsToStringConvert" class="com.cameltraining.JmsMessageToStringConverter"></bean>
     <cxf:rsServer id="sampleService" address="http://localhost:8383" serviceClass="com.cameltraining.ISampleService">
     </cxf:rsServer>
     <cxf:rsClient id="rsClient"
@@ -51,7 +52,7 @@
                 <!--<constant>TEST</constant>-->
             <!--</transform>-->
             <!--<from uri="direct:dummy"/>-->
-            <convertBodyTo type=""></convertBodyTo>
+             <process ref="jmsToStringConvert"></process>
              <setHeader headerName="operationName">
                  <constant>ping</constant>
              </setHeader>
