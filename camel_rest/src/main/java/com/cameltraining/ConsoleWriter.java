@@ -3,6 +3,7 @@ package com.cameltraining;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Handler;
+import org.apache.camel.Processor;
 
 import javax.jms.JMSException;
 import javax.jms.TextMessage;
@@ -12,7 +13,7 @@ import java.util.Map;
 /**
  * Created by Lenovo on 4/11/2017.
  */
-public class ConsoleWriter {
+public class ConsoleWriter implements Processor {
     @Handler
     public void writeToConsole(Exchange exchange)
     {
@@ -36,5 +37,10 @@ public class ConsoleWriter {
         {
             //e.printStackTrace();
         }
+    }
+
+    @Override
+    public void process(Exchange exchange) throws Exception {
+        writeToConsole(exchange);
     }
 }

@@ -18,6 +18,8 @@
     <cxf:rsServer id="sampleService" address="http://localhost:8383" serviceClass="com.cameltraining.ISampleService">
 
     </cxf:rsServer>
+    <cxf:rsServer id="rsServer" address="http://localhost:8585/camelmocksrvice/ping">
+    </cxf:rsServer>
 
     <camelContext id="camel-context" xmlns="http://camel.apache.org/schema/blueprint">
         <route>
@@ -40,7 +42,8 @@
         <!--</route>-->
         <route>
             <from uri="activemq:servicedata:greeting"></from>
-            <to uri="bean:console?method=writeToConsole"></to>
+            <process ref="console"></process>
+            <!--<to uri="bean:console?method=writeToConsole"></to>-->
         </route>
     </camelContext>
 

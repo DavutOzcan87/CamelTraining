@@ -10,12 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>camel_rest</artifactId>
     <packaging>bundle</packaging>
-    <properties>
-        <camel-version>2.17.0.redhat-630187</camel-version>
-        <cxf-version>3.1.9</cxf-version>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
+
     <dependencies>
         <!-- needed for OSGi testing with CXF -->
         <dependency>
