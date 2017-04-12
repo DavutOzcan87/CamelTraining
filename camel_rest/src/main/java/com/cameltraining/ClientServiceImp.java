@@ -5,11 +5,10 @@ package com.cameltraining;
  */
 public class ClientServiceImp implements ClientService {
     @Override
-    public void ping(ClientResponse response)
+    public ClientResponse ping()
     {
         System.out.println("--Ping method--");
-        if(response != null)
-            print(response);
+        return null;
     }
 
     private void print(ClientResponse response) {

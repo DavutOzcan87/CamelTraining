@@ -22,7 +22,7 @@
     </cxf:rsServer>
     <cxf:rsClient id="rsClient"
                   address="http://localhost:8585/camelmocksrvice"
-                    serviceClass="com.cameltraining.ClientService">
+                    serviceClass="com.cameltraining.ClientService" loggingFeatureEnabled="true">
     </cxf:rsClient>
 
     <camelContext id="camel-context" xmlns="http://camel.apache.org/schema/blueprint">
@@ -34,6 +34,7 @@
         <route>
             <from uri="direct:greet"/>
             <bean ref="serviceImplementor" method="greet"/>
+            <!--<to uri="direct:dummy"/>-->
         </route>
         <!--<route>-->
             <!--<from uri="direct:greet"></from>-->
@@ -46,9 +47,23 @@
         <!--</route>-->
         <route>
             <from uri="activemq:servicedata:greeting"></from>
-            <process ref="console"></process>
-            <to uri="cxfrs:bean:rsClient"></to>
-            <bean ref="clientServiceImp" method="ping"></bean>
+            <!--<transform>-->
+                <!--<constant>TEST</constant>-->
+            <!--</transform>-->
+            <!--<from uri="direct:dummy"/>-->
+            <convertBodyTo type=""></convertBodyTo>
+             <setHeader headerName="operationName">
+                 <constant>ping</constant>
+             </setHeader>
+            <setHeader headerName="CamelCxfRsUsingHttpAPI">
+                <simple>false</simple>
+            </setHeader>
+            <log message="Headers --> ${headers}"/>
+            <log message="Body --> ${body}"/>
+            <to uri="cxfrs:bean:rsClient" ></to>
+            <!--<bean ref="clientServiceImp" method="ping"></bean>-->
+
+            <log message="Finished caliing:${headers} ${body}"/>
         </route>
     </camelContext>
 
