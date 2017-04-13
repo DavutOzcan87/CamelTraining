@@ -12,6 +12,7 @@
         <module>camel_rest</module>
         <module>camel_route_test</module>
         <module>camel_rest_client</module>
+        <module>agragte_restfull</module>
     </modules>
 
     <properties>
