@@ -17,8 +17,7 @@
 
     <bean id="console" class="com.cameltraining.ConsoleWriter"></bean>
     <bean id="jsonProvider" class="org.apache.cxf.jaxrs.provider.json.JSONProvider"/>
-    <bean id="clientServiceImp" class="com.cameltraining.ClientServiceImp"></bean>
-    <bean id="jmsToStringConvert" class="com.cameltraining.JmsMessageToStringConverter"></bean>
+    <bean id="rsClientTransformer" class="com.cameltraining.PingTransform"></bean>
     <cxf:rsServer id="sampleService" address="http://localhost:8383" serviceClass="com.cameltraining.ISampleService">
     </cxf:rsServer>
     <cxf:rsClient id="rsClient"
@@ -29,42 +28,29 @@
     <camelContext id="camel-context" xmlns="http://camel.apache.org/schema/blueprint">
         <route>
             <from uri="cxfrs:bean:sampleService?bindingStyle=SimpleConsumer"/>
-            <!-- call the route based on the operation invoked on the REST web service -->
             <toD uri="direct:${header.operationName}"/>
         </route>
         <route>
             <from uri="direct:greet"/>
             <bean ref="serviceImplementor" method="greet"/>
-            <!--<to uri="direct:dummy"/>-->
         </route>
-        <!--<route>-->
-            <!--<from uri="direct:greet"></from>-->
-            <!--<bean ref="console" method="writeToConsole"></bean>-->
-            <!--<to uri="activemq:servicedata:greeting"></to>-->
-            <!--&lt;!&ndash;<bean ref="serviceImplementor" method="greet"/>&ndash;&gt;-->
-            <!--<transform>-->
-                <!--<constant>OK</constant>-->
-            <!--</transform>-->
-        <!--</route>-->
         <route>
             <from uri="activemq:servicedata:greeting"></from>
-            <!--<transform>-->
-                <!--<constant>TEST</constant>-->
-            <!--</transform>-->
-            <!--<from uri="direct:dummy"/>-->
-             <process ref="jmsToStringConvert"></process>
              <setHeader headerName="operationName">
                  <constant>ping</constant>
              </setHeader>
             <setHeader headerName="CamelCxfRsUsingHttpAPI">
                 <simple>false</simple>
             </setHeader>
+            <setHeader headerName="CamelCxfRsUsingHttpAPI">
+                <simple>false</simple>
+            </setHeader>
             <log message="Headers --> ${headers}"/>
             <log message="Body --> ${body}"/>
+            <process ref="rsClientTransformer"></process>
             <to uri="cxfrs:bean:rsClient" ></to>
-            <!--<bean ref="clientServiceImp" method="ping"></bean>-->
-
             <log message="Finished caliing:${headers} ${body}"/>
+            <process ref="console"></process>
         </route>
     </camelContext>
 
