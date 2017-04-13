@@ -3,10 +3,25 @@
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xmlns:cxf="http://camel.apache.org/schema/blueprint/cxf"
+           xmlns:cfx="http://camel.apache.org/schema/blueprint/cxf"
            xsi:schemaLocation="
              http://www.osgi.org/xmlns/blueprint/v1.0.0 https://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
              http://camel.apache.org/schema/blueprint/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
              http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd
              ">
 
+    <cfx:rsServer id="userService"
+            address="http://localhost/8484"
+            serviceClass="com.cameltraining.aggragatesample.UserService"
+            loggingFeatureEnabled="true">
+
+    </cfx:rsServer>
+    <camelContext xmlns="http://camel.apache.org/schema/blueprint">
+        <route>
+            <from uri="xcf:bean:userService?bindingStyle=SimpleConsumer"></from>
+            <!--&lt;!&ndash;<to uri="mock:userServiceMock"></to>&ndash;&gt;-->
+            <!--<from uri="direct:start"></from>-->
+            <to uri="mock:userService"></to>
+        </route>
+    </camelContext>
 </blueprint>

@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="agragate_restfull" />
         <module name="agragte_restfull" />
         <module name="camel_rest" />
         <module name="camel_rest (1)" />
@@ -14,6 +15,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="agragate_restfull" target="1.8" />
       <module name="agragte_restfull" target="1.8" />
       <module name="camel_rest" target="1.8" />
       <module name="camel_rest (1)" target="1.5" />
