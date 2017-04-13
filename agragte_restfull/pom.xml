@@ -17,7 +17,7 @@
             <version>6.0_ALPHA</version>
             <scope>test</scope>
         </dependency>
-        <!-- camel -->
+
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-core</artifactId>
@@ -38,7 +38,6 @@
             <artifactId>camel-jaxb</artifactId>
             <version>${camel-version}</version>
         </dependency>
-
         <!-- cxf http/jetty server -->
         <dependency>
             <groupId>org.apache.cxf</groupId>
@@ -56,17 +55,11 @@
             <artifactId>cxf-rt-rs-extension-providers</artifactId>
             <version>${cxf-version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.jaxrs</groupId>
-            <artifactId>jackson-jaxrs-json-provider</artifactId>
-            <version>2.7.1</version>
-        </dependency>
-
         <!-- testing -->
         <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-test-blueprint</artifactId>
-            <version>2.17.0</version>
+            <version>${camel-version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -94,6 +87,17 @@
             <artifactId>log4j</artifactId>
             <scope>test</scope>
             <version>1.2.17</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>3.6.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-all</artifactId>
+            <version>5.11.0.redhat-630187</version>
         </dependency>
     </dependencies>
     <build>

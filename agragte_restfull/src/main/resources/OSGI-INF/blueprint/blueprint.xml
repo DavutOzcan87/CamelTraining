@@ -3,25 +3,59 @@
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xmlns:cxf="http://camel.apache.org/schema/blueprint/cxf"
-           xmlns:cfx="http://camel.apache.org/schema/blueprint/cxf"
            xsi:schemaLocation="
              http://www.osgi.org/xmlns/blueprint/v1.0.0 https://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
              http://camel.apache.org/schema/blueprint/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
              http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd
              ">
+    <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
+        <property name="brokerURL" value="tcp://localhost:61616"/>
+        <property name="userName" value="Username" />
+        <property name="password" value="Password" />
+    </bean>
 
-    <cfx:rsServer id="userService"
-            address="http://localhost/8484"
-            serviceClass="com.cameltraining.aggragatesample.UserService"
-            loggingFeatureEnabled="true">
+    <bean id="console" class="com.cameltraining.aggragatesample.ConsoleWriter"></bean>
+    <bean id="jsonProvider" class="org.apache.cxf.jaxrs.provider.json.JSONProvider"/>
+    <bean id="rsClientTransformer" class="com.cameltraining.aggragatesample.PingTransform"></bean>
+    <cxf:rsServer id="sampleService" address="http://localhost:8383" serviceClass="com.cameltraining.aggragatesample.ISampleService">
+    </cxf:rsServer>
+    <cxf:rsClient id="rsClient"
+                  address="http://localhost:8585/camelmocksrvice"
+                    serviceClass="com.cameltraining.aggragatesample.ClientService" loggingFeatureEnabled="true">
+    </cxf:rsClient>
 
-    </cfx:rsServer>
-    <camelContext xmlns="http://camel.apache.org/schema/blueprint">
+    <camelContext id="camel-context" xmlns="http://camel.apache.org/schema/blueprint">
         <route>
-            <from uri="xcf:bean:userService?bindingStyle=SimpleConsumer"></from>
-            <!--&lt;!&ndash;<to uri="mock:userServiceMock"></to>&ndash;&gt;-->
-            <!--<from uri="direct:start"></from>-->
-            <to uri="mock:userService"></to>
+            <from uri="cxfrs:bean:sampleService?bindingStyle=SimpleConsumer"/>
+            <!--<toD uri="direct:${header.operationName}"/>-->
+            <log message="\nheaders===>${headers}\n"></log>
+            <log message="\nbody===>${body}\n"></log>
+            <transform>
+                <constant>OK</constant>
+            </transform>
         </route>
+        <!--<route>-->
+            <!--<from uri="direct:greet"/>-->
+            <!--<bean ref="serviceImplementor" method="greet"/>-->
+        <!--</route>-->
+        <!--<route>-->
+            <!--<from uri="activemq:servicedata:greeting"></from>-->
+             <!--<setHeader headerName="operationName">-->
+                 <!--<constant>ping</constant>-->
+             <!--</setHeader>-->
+            <!--<setHeader headerName="CamelCxfRsUsingHttpAPI">-->
+                <!--<simple>false</simple>-->
+            <!--</setHeader>-->
+            <!--<setHeader headerName="CamelCxfRsUsingHttpAPI">-->
+                <!--<simple>false</simple>-->
+            <!--</setHeader>-->
+            <!--<log message="Headers &ndash;&gt; ${headers}"/>-->
+            <!--<log message="Body &ndash;&gt; ${body}"/>-->
+            <!--<process ref="rsClientTransformer"></process>-->
+            <!--<to uri="cxfrs:bean:rsClient" ></to>-->
+            <!--<log message="Finished caliing:${headers} ${body}"/>-->
+            <!--<process ref="console"></process>-->
+        <!--</route>-->
     </camelContext>
+
 </blueprint>
