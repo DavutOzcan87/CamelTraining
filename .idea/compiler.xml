@@ -12,6 +12,7 @@
         <module name="camel_rest (1)" />
         <module name="camel_rest_client" />
         <module name="camel_route_test" />
+        <module name="type_converter" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -22,6 +23,7 @@
       <module name="camel_rest_client" target="1.8" />
       <module name="camel_route_test" target="1.8" />
       <module name="CamelTraining" target="1.8" />
+      <module name="type_converter" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

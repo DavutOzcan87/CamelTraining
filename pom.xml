@@ -13,12 +13,13 @@
         <module>camel_route_test</module>
         <module>camel_rest_client</module>
         <module>agragte_restfull</module>
+        <module>type_converter</module>
     </modules>
 
     <properties>
         <camel-version>2.17.0.redhat-630187</camel-version>
         <!--<camel-version>2.18.3</camel-version>-->
-        <cxf-version>3.1.9</cxf-version>
+        <cxf-version>3.1.5.redhat-630187</cxf-version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
@@ -48,7 +49,15 @@
                     <artifactItems>
                         <artifactItem>
                             <groupId>com.sample.cameltraining</groupId>
-                            <artifactId>camel_rest</artifactId>
+                            <artifactId>agragate_restfull</artifactId>
+                            <type>jar</type>
+                            <overWrite>true</overWrite>
+                            <version>1.0-SNAPSHOT</version>
+                            <outputDirectory>C:\jboss-fuse-6.3.0.redhat-187\deploy</outputDirectory>
+                        </artifactItem>
+                        <artifactItem>
+                            <groupId>com.sample.cameltraining</groupId>
+                            <artifactId>type_converter</artifactId>
                             <type>jar</type>
                             <overWrite>true</overWrite>
                             <version>1.0-SNAPSHOT</version>
