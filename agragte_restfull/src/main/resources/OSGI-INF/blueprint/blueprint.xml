@@ -13,17 +13,8 @@
         <property name="userName" value="Username" />
         <property name="password" value="Password" />
     </bean>
-
-    <bean id="console" class="com.cameltraining.aggragatesample.ConsoleWriter"></bean>
-    <bean id="jsonProvider" class="org.apache.cxf.jaxrs.provider.json.JSONProvider"/>
-    <bean id="rsClientTransformer" class="com.cameltraining.aggragatesample.PingTransform"></bean>
     <cxf:rsServer id="sampleService" address="http://localhost:8383" serviceClass="com.cameltraining.aggragatesample.ISampleService">
     </cxf:rsServer>
-    <cxf:rsClient id="rsClient"
-                  address="http://localhost:8585/camelmocksrvice"
-                    serviceClass="com.cameltraining.aggragatesample.ClientService" loggingFeatureEnabled="true">
-    </cxf:rsClient>
-
     <camelContext id="camel-context" xmlns="http://camel.apache.org/schema/blueprint">
         <route>
             <from uri="cxfrs:bean:sampleService?bindingStyle=SimpleConsumer"/>
@@ -34,28 +25,5 @@
                 <constant>OK</constant>
             </transform>
         </route>
-        <!--<route>-->
-            <!--<from uri="direct:greet"/>-->
-            <!--<bean ref="serviceImplementor" method="greet"/>-->
-        <!--</route>-->
-        <!--<route>-->
-            <!--<from uri="activemq:servicedata:greeting"></from>-->
-             <!--<setHeader headerName="operationName">-->
-                 <!--<constant>ping</constant>-->
-             <!--</setHeader>-->
-            <!--<setHeader headerName="CamelCxfRsUsingHttpAPI">-->
-                <!--<simple>false</simple>-->
-            <!--</setHeader>-->
-            <!--<setHeader headerName="CamelCxfRsUsingHttpAPI">-->
-                <!--<simple>false</simple>-->
-            <!--</setHeader>-->
-            <!--<log message="Headers &ndash;&gt; ${headers}"/>-->
-            <!--<log message="Body &ndash;&gt; ${body}"/>-->
-            <!--<process ref="rsClientTransformer"></process>-->
-            <!--<to uri="cxfrs:bean:rsClient" ></to>-->
-            <!--<log message="Finished caliing:${headers} ${body}"/>-->
-            <!--<process ref="console"></process>-->
-        <!--</route>-->
     </camelContext>
-
 </blueprint>
