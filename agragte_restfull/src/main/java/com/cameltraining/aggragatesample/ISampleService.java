@@ -6,10 +6,14 @@ import javax.ws.rs.core.MediaType;
 /**
  * Created by Lenovo on 4/11/2017.
  */
-@Path("/greeting")
+@Path("/userservice")
 public interface ISampleService {
     @GET
-    @Path("/hello/{name}")
+    @Path("/user/{name}/{count}/{message}")
     @Produces(MediaType.TEXT_PLAIN)
-    String greet(@PathParam("name") String name);
+    String greet(
+            @PathParam("name") String name,
+            @PathParam("count") String count,
+            @PathParam("message") String message
+    );
 }
