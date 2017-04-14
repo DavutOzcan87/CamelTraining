@@ -26,7 +26,7 @@ public class CamelRouteTest extends CamelBlueprintTestSupport {
 //    }
 
     @Test
-    public void testNothing() throws Exception
+    public void testNothing()
     {
 
 //        String response = template.requestBodyAndHeader("restlet:http://localhost/8484/?restletMethod=GET",

@@ -8,19 +8,23 @@
              http://camel.apache.org/schema/blueprint/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
              http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd
              ">
-    <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent">
+    <bean id="amq" class="org.apache.activemq.camel.component.ActiveMQComponent">
         <property name="brokerURL" value="tcp://localhost:61616"/>
         <property name="userName" value="Username" />
         <property name="password" value="Password" />
     </bean>
+
+    <bean id="userServiceToUserDataConverter" class="com.cameltraining.aggragatesample.UserServiceRequestToUserDataConverter"></bean>
     <cxf:rsServer id="sampleService" address="http://localhost:8383" serviceClass="com.cameltraining.aggragatesample.ISampleService">
     </cxf:rsServer>
     <camelContext id="camel-context" xmlns="http://camel.apache.org/schema/blueprint">
-        <route>
+        <route id="inbound-route">
             <from uri="cxfrs:bean:sampleService?bindingStyle=SimpleConsumer"/>
             <!--<toD uri="direct:${header.operationName}"/>-->
+            <convertBodyTo type="com.cameltraining.aggragatesample.UserData"></convertBodyTo>
             <log message="\nheaders===>${headers}\n"></log>
             <log message="\nbody===>${body}\n"></log>
+            <to uri="amq:userServiceQueue:received"></to>
             <transform>
                 <constant>OK</constant>
             </transform>
