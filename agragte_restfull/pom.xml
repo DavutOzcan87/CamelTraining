@@ -38,6 +38,11 @@
             <artifactId>camel-jaxb</artifactId>
             <version>${camel-version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-gson</artifactId>
+            <version>${camel-version}</version>
+        </dependency>
         <!-- cxf http/jetty server -->
         <dependency>
             <groupId>org.apache.cxf</groupId>

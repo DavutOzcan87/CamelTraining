@@ -18,16 +18,23 @@
     <cxf:rsServer id="sampleService" address="http://localhost:8383" serviceClass="com.cameltraining.aggragatesample.ISampleService">
     </cxf:rsServer>
     <camelContext id="camel-context" xmlns="http://camel.apache.org/schema/blueprint">
+        <dataFormats>
+            <json id="gson" library="Gson"/>
+        </dataFormats>
         <route id="inbound-route">
             <from uri="cxfrs:bean:sampleService?bindingStyle=SimpleConsumer"/>
-            <!--<toD uri="direct:${header.operationName}"/>-->
             <convertBodyTo type="com.cameltraining.aggragatesample.UserData"></convertBodyTo>
+            <marshal ref="gson"></marshal>
             <log message="\nheaders===>${headers}\n"></log>
             <log message="\nbody===>${body}\n"></log>
-            <to uri="amq:userServiceQueue:received"></to>
+            <wireTap uri="amq:userServiceQueue:received"></wireTap>
             <transform>
                 <constant>OK</constant>
             </transform>
+        </route>
+        <route id="aggragate-route">
+            <from uri="amq:userServiceQueue:received"></from>
+            <log message="###AMQ### ${body}"></log>
         </route>
     </camelContext>
 </blueprint>
