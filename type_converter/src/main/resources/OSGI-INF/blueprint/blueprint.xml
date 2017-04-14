@@ -11,10 +11,10 @@
 
     <bean id="customConverter" class="com.cameltraining.converter.HeaderConverter"></bean>
     <camelContext id="camel-context"
-                  xmlns="http://camel.apache.org/schema/blueprint"
-                  typeConverterStatisticsEnabled="true">
+                  xmlns="http://camel.apache.org/schema/blueprint">
         <route>
-            <from uri="timer:foo?period=5000&amp;repeatCount=1"></from>
+            <!--<from uri="timer:foo?period=5000&amp;repeatCount=1"></from>-->
+            <from uri="direct:converterDirect"></from>
             <setBody>
                 <constant>test</constant>
             </setBody>

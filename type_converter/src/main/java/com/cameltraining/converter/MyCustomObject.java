@@ -38,4 +38,10 @@ public class MyCustomObject {
     public void setMessage(String message) {
         this.message = message;
     }
+
+
+    @Override
+    public String toString() {
+        return String.format("%s:[%s,%d,%s]",getClass().getSimpleName() , name ,age , message);
+    }
 }

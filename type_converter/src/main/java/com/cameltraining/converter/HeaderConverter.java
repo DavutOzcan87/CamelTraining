@@ -9,18 +9,13 @@ import org.apache.camel.TypeConverters;
  */
 
 
-public class HeaderConverter implements TypeConverters{
+public class HeaderConverter implements TypeConverters
+{
     @Converter
     public MyCustomObject convert(String data ,Exchange exchange)
     {
-        return new MyCustomObject("test" , 20 , "testmsg");
-
+        String values = (String) exchange.getIn().getHeader("customheader");
+        String [] splitted = values.split("-");
+        return new MyCustomObject(splitted[0] , Integer.parseInt(splitted[1]) , splitted[2]);
     }
-
-//    @Converter
-//    public static MyCustomObject convert2(String data ,Exchange exchange)
-//    {
-//        return new MyCustomObject("test" , 20 , "testmsg");
-//
-//    }
 }
