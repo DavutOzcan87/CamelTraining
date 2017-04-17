@@ -30,8 +30,19 @@
     <bean id="userServiceNormalizer" class="com.cameltraining.aggragatesample.UserServiceRequestNormalizer"></bean>
     <bean id="userServiceToUserDataConverter" class="com.cameltraining.aggragatesample.UserServiceRequestToUserDataConverter"></bean>
     <bean id="userServiceAggregationStrategy" class="com.cameltraining.aggragatesample.UserServiceAggregationStrategy"></bean>
-    <cxf:rsServer id="sampleService" address="http://localhost:8383" serviceClass="com.cameltraining.aggragatesample.ISampleService">
+    <bean id = "messageRequestHandler" class="com.cameltraining.aggragatesample.MessageRequestHandlerBean"></bean>
+    <cxf:rsServer id="sampleService"
+                  address="http://localhost:8383"
+                  serviceClass="com.cameltraining.aggragatesample.ISampleService"
+                  loggingFeatureEnabled="true">
     </cxf:rsServer>
+    <cxf:rsServer id="productionService"
+                  address="http://localhost:8484"
+                  serviceClass="com.cameltraining.aggragatesample.IMessagingService"
+                  loggingFeatureEnabled="true">
+    </cxf:rsServer>
+
+
     <camelContext id="camel-context" xmlns="http://camel.apache.org/schema/blueprint">
         <dataFormats>
             <json id="gson" library="Gson"/>
@@ -66,6 +77,10 @@
             <from uri="direct:mylog"></from>
 
             <log message="###AGGREATED MESSAGE### ${body}"></log>
+        </route>
+        <route id="messaging-service-route">
+            <from uri="cxfrs:bean:productionService?bindingStyle=SimpleConsumer"></from>
+            <bean ref="messageRequestHandler" method="reply"></bean>
         </route>
     </camelContext>
 </blueprint>
