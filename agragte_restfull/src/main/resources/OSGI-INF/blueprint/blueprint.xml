@@ -41,7 +41,7 @@
             <process ref="userServiceNormalizer"></process>
             <log message="\nheaders===>${headers}\n"></log>
             <log message="\nbody===>${body}\n"></log>
-            <wireTap uri="amq:userServiceQueue:received"></wireTap>
+            <wireTap uri="direct:aggragateMessage"></wireTap>
             <!--<multicast>-->
                 <!--<to uri="amq:userServiceQueue:received"></to>-->
             <!--</multicast>-->
@@ -50,7 +50,7 @@
             </transform>
         </route>
         <route id="aggragate-route">
-            <from uri="amq:userServiceQueue:received"></from>
+            <from uri="direct:aggragateMessage"></from>
             <aggregate strategyRef="userServiceAggregationStrategy">
                 <correlationExpression>
                     <header>correlationId</header>
