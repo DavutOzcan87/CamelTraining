@@ -13,8 +13,9 @@
         <property name="userName" value="Username" />
         <property name="password" value="Password" />
     </bean>
-
+    <bean id="userServiceNormalizer" class="com.cameltraining.aggragatesample.UserServiceRequestNormalizer"></bean>
     <bean id="userServiceToUserDataConverter" class="com.cameltraining.aggragatesample.UserServiceRequestToUserDataConverter"></bean>
+    <bean id="userServiceAggregationStrategy" class="com.cameltraining.aggragatesample.UserServiceAggregationStrategy"></bean>
     <cxf:rsServer id="sampleService" address="http://localhost:8383" serviceClass="com.cameltraining.aggragatesample.ISampleService">
     </cxf:rsServer>
     <camelContext id="camel-context" xmlns="http://camel.apache.org/schema/blueprint">
@@ -23,18 +24,28 @@
         </dataFormats>
         <route id="inbound-route">
             <from uri="cxfrs:bean:sampleService?bindingStyle=SimpleConsumer"/>
-            <convertBodyTo type="com.cameltraining.aggragatesample.UserData"></convertBodyTo>
-            <marshal ref="gson"></marshal>
+            <!--<convertBodyTo type="com.cameltraining.aggragatesample.UserData"></convertBodyTo>-->
+            <!--<marshal ref="gson"></marshal>-->
+            <process ref="userServiceNormalizer"></process>
             <log message="\nheaders===>${headers}\n"></log>
             <log message="\nbody===>${body}\n"></log>
             <wireTap uri="amq:userServiceQueue:received"></wireTap>
+            <!--<multicast>-->
+                <!--<to uri="amq:userServiceQueue:received"></to>-->
+            <!--</multicast>-->
             <transform>
                 <constant>OK</constant>
             </transform>
         </route>
         <route id="aggragate-route">
             <from uri="amq:userServiceQueue:received"></from>
-            <log message="###AMQ### ${body}"></log>
+            <aggregate strategyRef="userServiceAggregationStrategy"
+                       completionSize="2" >
+                <correlationExpression>
+                    <simple>header.correlationId</simple>
+                </correlationExpression>
+            </aggregate>
+            <log message="###AGGREATED MESSAGE### ${body}"></log>
         </route>
     </camelContext>
 </blueprint>
