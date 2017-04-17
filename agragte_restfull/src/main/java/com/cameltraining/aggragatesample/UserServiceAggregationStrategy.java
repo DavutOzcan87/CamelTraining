@@ -20,7 +20,7 @@ public class UserServiceAggregationStrategy  implements AggregationStrategy{
         if(old == null)
             return neww;
         String finalResult = old.getIn().getBody(String.class) + neww.getIn().getBody(String.class);
-        neww.getIn().setBody(finalResult);
-        return neww;
+        old.getIn().setBody(finalResult);
+        return old;
     }
 }
