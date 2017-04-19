@@ -6,6 +6,7 @@ import org.apache.camel.Predicate;
 import org.apache.camel.builder.AdviceWithRouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.impl.DefaultCamelContext;
+import org.apache.camel.model.RouteDefinition;
 import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Before;
@@ -44,12 +45,12 @@ public class ConverterTest extends CamelBlueprintTestSupport{
     @Test
     public void testConvertedCorrectly() throws Exception
     {
-        context.getRouteDefinitions().get(0).adviceWith(context, new AdviceWithRouteBuilder() {
+        RouteDefinition rd = context.getRouteDefinition("converter_route");
+        rd.adviceWith(context, new AdviceWithRouteBuilder() {
             @Override
             public void configure() throws Exception {
                 replaceFromWith("direct:start");
                 mockEndpoints();
-
             }
         });
         context.start();
