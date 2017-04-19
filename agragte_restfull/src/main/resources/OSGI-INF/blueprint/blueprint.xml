@@ -81,6 +81,9 @@
         <route id="messaging-service-route">
             <from uri="cxfrs:bean:productionService?bindingStyle=SimpleConsumer"></from>
             <bean ref="messageRequestHandler" method="reply"></bean>
+            <multicast>
+                <log message="response for id:${header.correlationId}:${body}"></log>
+            </multicast>
         </route>
     </camelContext>
 </blueprint>

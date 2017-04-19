@@ -19,7 +19,7 @@ public class MessageRequestHandlerBean {
             CamelContext context =  exchange.getContext();
             ConsumerTemplate consumer = context.createConsumerTemplate();
             String uri = "amq:aggregatedMessages?selector=correlationId%3D'"+id+"'";
-            Exchange exc = consumer.receive( uri, 5000);
+            Exchange exc = consumer.receive( uri, 3000);
             if(exc == null)
                 return String.format("No record found for id=%s",id);
             return exc.getIn().getBody().toString();
