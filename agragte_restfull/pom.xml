@@ -43,6 +43,11 @@
             <artifactId>camel-gson</artifactId>
             <version>${camel-version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-kahadb-store</artifactId>
+            <version>5.11.0.redhat-630187</version>
+        </dependency>
         <!-- cxf http/jetty server -->
         <dependency>
             <groupId>org.apache.cxf</groupId>
