@@ -12,7 +12,7 @@
 
     <broker xmlns="http://activemq.apache.org/schema/core" persistent="true">
         <transportConnectors>
-            <transportConnector name="tcp" uri="vm:activemqbroker"/>
+            <transportConnector name="tcp" uri="vm://activemqbroker"/>
         </transportConnectors>
         <persistenceAdapter>
             <kahaDB directory="activemq-data"></kahaDB>
