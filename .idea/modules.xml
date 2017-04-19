@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/CamelTraining.iml" filepath="$PROJECT_DIR$/.idea/CamelTraining.iml" />
+      <module fileurl="file://$PROJECT_DIR$/agragte_restfull/agragate_restfull.iml" filepath="$PROJECT_DIR$/agragte_restfull/agragate_restfull.iml" />
+      <module fileurl="file://$PROJECT_DIR$/camel_rest/camel_rest.iml" filepath="$PROJECT_DIR$/camel_rest/camel_rest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/camel_rest_client/camel_rest_client.iml" filepath="$PROJECT_DIR$/camel_rest_client/camel_rest_client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/camel_route_test/camel_route_test.iml" filepath="$PROJECT_DIR$/camel_route_test/camel_route_test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/type_converter/type_converter.iml" filepath="$PROJECT_DIR$/type_converter/type_converter.iml" />
+    </modules>
+  </component>
+</project>
