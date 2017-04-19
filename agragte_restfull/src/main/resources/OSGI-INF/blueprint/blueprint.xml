@@ -47,15 +47,13 @@
         <dataFormats>
             <json id="gson" library="Gson"/>
         </dataFormats>
+
         <route id="inbound-route">
             <from uri="cxfrs:bean:sampleService?bindingStyle=SimpleConsumer"/>
             <process ref="userServiceNormalizer"></process>
             <log message="\nheaders===>${headers}\n"></log>
             <log message="\nbody===>${body}\n"></log>
             <wireTap uri="direct:aggragateMessage"></wireTap>
-            <!--<multicast>-->
-                <!--<to uri="amq:userServiceQueue:received"></to>-->
-            <!--</multicast>-->
             <transform>
                 <constant>OK</constant>
             </transform>
@@ -69,15 +67,17 @@
                 <completionSize>
                     <header>completionSize</header>
                 </completionSize>
-                <to uri="direct:mylog"/>
+                <to uri="amq:aggregatedMessages"/>
             </aggregate>
-
         </route>
-        <route id="dummy-route">
-            <from uri="direct:mylog"></from>
-
-            <log message="###AGGREATED MESSAGE### ${body}"></log>
-        </route>
+        <!--<route id="aggragated-amq-test">-->
+            <!--<from uri="amq:aggregatedMessages"></from>-->
+            <!--<log message="###AGGREATED MESSAGE FROM AMQ### ${body}"></log>-->
+        <!--</route>-->
+        <!--<route id="dummy-route">-->
+            <!--<from uri="direct:mylog"></from>-->
+            <!--<log message="###AGGREATED MESSAGE### ${body}"></log>-->
+        <!--</route>-->
         <route id="messaging-service-route">
             <from uri="cxfrs:bean:productionService?bindingStyle=SimpleConsumer"></from>
             <bean ref="messageRequestHandler" method="reply"></bean>
