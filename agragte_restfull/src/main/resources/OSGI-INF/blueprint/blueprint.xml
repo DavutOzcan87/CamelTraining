@@ -15,7 +15,7 @@
             <transportConnector name="tcp" uri="vm://activemqbroker"/>
         </transportConnectors>
         <persistenceAdapter>
-            <kahaDB directory="activemq-data"></kahaDB>
+            <kahaDB directory="mydbdata"></kahaDB>
         </persistenceAdapter>
     </broker>
 
@@ -70,14 +70,6 @@
                 <to uri="amq:aggregatedMessages"/>
             </aggregate>
         </route>
-        <!--<route id="aggragated-amq-test">-->
-            <!--<from uri="amq:aggregatedMessages"></from>-->
-            <!--<log message="###AGGREATED MESSAGE FROM AMQ### ${body}"></log>-->
-        <!--</route>-->
-        <!--<route id="dummy-route">-->
-            <!--<from uri="direct:mylog"></from>-->
-            <!--<log message="###AGGREATED MESSAGE### ${body}"></log>-->
-        <!--</route>-->
         <route id="messaging-service-route">
             <from uri="cxfrs:bean:productionService?bindingStyle=SimpleConsumer"></from>
             <bean ref="messageRequestHandler" method="reply"></bean>
