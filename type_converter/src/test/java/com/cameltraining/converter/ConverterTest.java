@@ -3,6 +3,7 @@ package com.cameltraining.converter;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
 import org.apache.camel.Predicate;
+import org.apache.camel.Processor;
 import org.apache.camel.builder.AdviceWithRouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.impl.DefaultCamelContext;
@@ -13,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.Assert.*;
 
@@ -85,7 +87,6 @@ public class ConverterTest extends CamelBlueprintTestSupport{
                 mockEndpoints();
             }
         });
-
         MockEndpoint me =  getMockEndpoint("mock:log:result");
         String resultString = getResultValue();
         me.expectedBodiesReceived(resultString);
@@ -93,4 +94,70 @@ public class ConverterTest extends CamelBlueprintTestSupport{
         template.sendBody("direct:start" , "test message");
         assertMockEndpointsSatisfied();
     }
+
+    @Test
+    public void shouldRequestBody() throws Exception {
+        RouteDefinition rd = context.getRouteDefinition("converter_route");
+        rd.adviceWith(context, new AdviceWithRouteBuilder() {
+            @Override
+            public void configure() throws Exception {
+                replaceFromWith("direct:start");
+                mockEndpoints();
+            }
+        });
+
+        MockEndpoint me =  getMockEndpoint("mock:log:result");
+        String resultString = getResultValue();
+        me.expectedBodiesReceived(resultString);
+        context.start();
+        String result = template.requestBody("direct:start" ,"anv" , String.class );
+        assertEquals(getResultValue(), result );
+    }
+
+    @Test
+    public void shouldInterceptEndPoint() throws Exception {
+        RouteDefinition rd = context.getRouteDefinition("converter_route");
+        final AtomicBoolean intercepted = new AtomicBoolean(false);
+        rd.adviceWith(context, new AdviceWithRouteBuilder() {
+            @Override
+            public void configure() throws Exception {
+                interceptSendToEndpoint("log:result")
+                        .skipSendToOriginalEndpoint().
+                        process(new Processor() {
+                            public void process(Exchange exchange) throws Exception {
+                                intercepted.set(true);
+                            }
+                        });
+            }
+        });
+
+        context.start();
+        template.sendBody("direct:converterDirect" , "test");
+        assertTrue(intercepted.get());
+    }
+
+
+    @Test
+    public void shouldVeaveById() throws Exception {
+        RouteDefinition rd = context.getRouteDefinitions().get(0);
+        final MyCustomObject myCustomObject =  new MyCustomObject("test" , 29 , "weaved");
+        rd.adviceWith(context, new AdviceWithRouteBuilder() {
+            @Override
+            public void configure() throws Exception {
+                weaveById("converterEndPoint")
+                        .replace().process(new Processor() {
+                    public void process(Exchange exchange) throws Exception {
+                        exchange.getIn().setBody(myCustomObject);
+                    }
+                });
+                weaveAddLast().to("mock:result");
+            }
+        });
+
+        getMockEndpoint("mock:result").expectedBodiesReceived(myCustomObject.toString());
+        context.start();
+        template.sendBody("direct:converterDirect","test");
+        assertMockEndpointsSatisfied();
+    }
+
 }

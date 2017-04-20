@@ -22,7 +22,7 @@
             <setHeader headerName="customheader">
                 <constant>lionel-29-best player in the world</constant>
             </setHeader>
-            <convertBodyTo type="com.cameltraining.converter.MyCustomObject" />
+            <convertBodyTo id="converterEndPoint" type="com.cameltraining.converter.MyCustomObject" />
             <log message="from type converter ===> ${body}"></log>
             <to uri="log:result"></to>
             <!--<log message="${body}"></log>-->

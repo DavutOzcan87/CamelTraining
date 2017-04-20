@@ -1,5 +1,6 @@
 package com.cameltraining.aggragatesample;
 
+import org.apache.camel.builder.AdviceWithRouteBuilder;
 import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.junit.Test;
@@ -15,24 +16,25 @@ public class CamelRouteTest extends CamelBlueprintTestSupport {
         return "OSGI-INF/blueprint/blueprint.xml";
     }
 
+
+    @Override
+    public boolean isUseAdviceWith() {
+        return true;
+    }
+
     private static final String URL = "http://localhost/8484/userservice/user";
 
-//    protected static UserService createCXFClient() {
-//        // we use CXF to create a client for us as its easier than JAXWS and works
-//        JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
-//        factory.setServiceClass(UserService.class);
-//        factory.setAddress(URL);
-//        return (UserService) factory.create();
-//    }
-
     @Test
-    public void testNothing()
-    {
-
-//        String response = template.requestBodyAndHeader("restlet:http://localhost/8484/?restletMethod=GET",
-//                null, "Accept", "application/json",
-//                String.class);
-//        getMockEndpoint("mock:userService").expectedMessageCount(1);
-        //assertMockEndpointsSatisfied();
+    public void testNothing() throws Exception {
+        context.getRouteDefinition("inbound-route").adviceWith(context, new AdviceWithRouteBuilder()
+        {
+            @Override
+            public void configure() throws Exception
+            {
+                replaceFromWith("direct:start");
+            }
+        });
+        context.start();
+        template.sendBody("direct:start","test");
     }
 }
