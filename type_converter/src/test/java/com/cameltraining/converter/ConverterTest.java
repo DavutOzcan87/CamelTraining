@@ -30,18 +30,6 @@ public class ConverterTest extends CamelBlueprintTestSupport{
         return "OSGI-INF/blueprint/blueprint.xml";
     }
 
-
-
-    @Before
-    public void before() throws Exception {
-
-    }
-
-    @Override
-    protected CamelContext createCamelContext() throws Exception {
-        return new DefaultCamelContext();
-    }
-
     @Test
     public void testConvertedCorrectly() throws Exception
     {
@@ -50,14 +38,59 @@ public class ConverterTest extends CamelBlueprintTestSupport{
             @Override
             public void configure() throws Exception {
                 replaceFromWith("direct:start");
+                //mockEndpoints();
+                interceptSendToEndpoint("log:result").to("mock:result");
+            }
+        });
+
+        MockEndpoint me =  getMockEndpoint("mock:result");
+        String resultString = getResultValue();
+        me.expectedBodiesReceived(resultString);
+        context.start();
+        template.sendBody("direct:start" , "test message");
+        assertMockEndpointsSatisfied();
+    }
+
+    private String getResultValue() {
+        return new MyCustomObject("lionel" , 29 , "best player in the world").toString();
+    }
+
+    @Test
+    public void shouldMockAllEndpoints() throws Exception {
+        RouteDefinition rd = context.getRouteDefinition("converter_route");
+        rd.adviceWith(context, new AdviceWithRouteBuilder() {
+            @Override
+            public void configure() throws Exception {
+                replaceFromWith("direct:start");
                 mockEndpoints();
             }
         });
-        context.start();
 
-        getMockEndpoint("mock:log").expectedBodiesReceived("test");
-        System.err.println("Sending body to mock timer");
-        template.sendBody("direct:start" , "");
+        MockEndpoint me =  getMockEndpoint("mock:log:result");
+        String resultString = getResultValue();
+        me.expectedBodiesReceived(resultString);
+        context.start();
+        template.sendBody("direct:start" , "test message");
+        assertMockEndpointsSatisfied();
+    }
+
+
+    @Test
+    public void shouldMockBeans() throws Exception {
+        RouteDefinition rd = context.getRouteDefinition("converter_route");
+        rd.adviceWith(context, new AdviceWithRouteBuilder() {
+            @Override
+            public void configure() throws Exception {
+                replaceFromWith("direct:start");
+                mockEndpoints();
+            }
+        });
+
+        MockEndpoint me =  getMockEndpoint("mock:log:result");
+        String resultString = getResultValue();
+        me.expectedBodiesReceived(resultString);
+        context.start();
+        template.sendBody("direct:start" , "test message");
         assertMockEndpointsSatisfied();
     }
 }
