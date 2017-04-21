@@ -10,14 +10,7 @@
              http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd
              ">
 
-    <broker xmlns="http://activemq.apache.org/schema/core" persistent="true">
-        <transportConnectors>
-            <transportConnector name="tcp" uri="vm://activemqbroker"/>
-        </transportConnectors>
-        <persistenceAdapter>
-            <kahaDB directory="mydbdata"></kahaDB>
-        </persistenceAdapter>
-    </broker>
+
 
     <bean id="amq" class="org.apache.activemq.camel.component.ActiveMQComponent">
         <property name="brokerURL" value="vm:activemqbroker"/>
@@ -44,9 +37,9 @@
 
 
     <camelContext id="camel-context" xmlns="http://camel.apache.org/schema/blueprint">
-        <dataFormats>
-            <json id="gson" library="Gson"/>
-        </dataFormats>
+        <!--<dataFormats>-->
+            <!--<json id="gson" library="Gson"/>-->
+        <!--</dataFormats>-->
 
         <route id="inbound-route">
             <from uri="cxfrs:bean:sampleService?bindingStyle=SimpleConsumer"/>
