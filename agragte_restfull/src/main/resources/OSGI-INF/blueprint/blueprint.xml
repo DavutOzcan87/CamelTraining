@@ -46,7 +46,7 @@
             <process ref="userServiceNormalizer"></process>
             <log message="\nheaders===>${headers}\n"></log>
             <log message="\nbody===>${body}\n"></log>
-            <wireTap uri="direct:aggragateMessage"></wireTap>
+            <wireTap id="aggreageteWireTab" uri="direct:aggragateMessage"></wireTap>
             <transform>
                 <constant>OK</constant>
             </transform>
