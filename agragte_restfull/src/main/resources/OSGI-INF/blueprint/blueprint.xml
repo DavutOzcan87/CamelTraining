@@ -60,7 +60,7 @@
                 <completionSize>
                     <header>completionSize</header>
                 </completionSize>
-                <to uri="amq:aggregatedMessages"/>
+                <to id="aggregatedMessageEndpointID" uri="amq:aggregatedMessages"/>
             </aggregate>
         </route>
         <route id="messaging-service-route">

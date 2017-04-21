@@ -26,11 +26,12 @@ public class InboundRouteTest extends CamelBlueprintTestSupport {
     public static final String ANYMESSAGE = "anymessage";
     public static final String ANYID = "anyid";
     public static final int ANY_COUNT = 1;
+    public static final String BLUEPRINT_XML_FILE = "OSGI-INF/blueprint/blueprint.xml";
     private RouteDefinition routeDefinition;
 
     @Override
     protected String getBlueprintDescriptor() {
-        return "OSGI-INF/blueprint/blueprint.xml";
+        return BLUEPRINT_XML_FILE;
     }
 
     @Before
