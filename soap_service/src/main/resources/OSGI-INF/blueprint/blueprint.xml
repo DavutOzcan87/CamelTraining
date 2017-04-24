@@ -14,13 +14,11 @@
                     serviceClass="com.cameltraining.soapservice.IGreetService">
     </cxf:cxfEndpoint>
 
-
+    <bean id="greetServiceBean" class="com.cameltraining.soapservice.GreetServiceBean"></bean>
     <camelContext id="soap-camel-context" xmlns="http://camel.apache.org/schema/blueprint">
         <route id="orderServiceRoute">
             <from uri="cxf:bean:greetServiceEndpoint"></from>
-            <transform>
-                <constant>OK</constant>
-            </transform>
+            <process ref="greetServiceBean"></process>
         </route>
     </camelContext>
 </blueprint>

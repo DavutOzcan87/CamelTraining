@@ -1,5 +1,7 @@
 package com.cameltraining.soapservice;
 
+import javax.jws.WebParam;
+import javax.jws.WebResult;
 import javax.jws.WebService;
 
 /**
@@ -7,5 +9,6 @@ import javax.jws.WebService;
  */
 @WebService
 public interface IGreetService {
-    String sayHello(String name);
+    @WebResult(name = "greet_response")
+    ApiResponse sayHello(@WebParam(name = "greet_request") GreetRequest request);
 }
