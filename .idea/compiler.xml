@@ -10,6 +10,7 @@
         <module name="camel_rest" />
         <module name="camel_rest_client" />
         <module name="camel_route_test" />
+        <module name="soap_service" />
         <module name="type_converter" />
       </profile>
     </annotationProcessing>
@@ -19,6 +20,7 @@
       <module name="camel_rest_client" target="1.5" />
       <module name="camel_route_test" target="1.5" />
       <module name="CamelTraining" target="1.5" />
+      <module name="soap_service" target="1.5" />
       <module name="type_converter" target="1.5" />
     </bytecodeTargetLevel>
   </component>

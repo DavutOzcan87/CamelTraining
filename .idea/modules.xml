@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/camel_rest/camel_rest.iml" filepath="$PROJECT_DIR$/camel_rest/camel_rest.iml" />
       <module fileurl="file://$PROJECT_DIR$/camel_rest_client/camel_rest_client.iml" filepath="$PROJECT_DIR$/camel_rest_client/camel_rest_client.iml" />
       <module fileurl="file://$PROJECT_DIR$/camel_route_test/camel_route_test.iml" filepath="$PROJECT_DIR$/camel_route_test/camel_route_test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/soap_service/soap_service.iml" filepath="$PROJECT_DIR$/soap_service/soap_service.iml" />
       <module fileurl="file://$PROJECT_DIR$/type_converter/type_converter.iml" filepath="$PROJECT_DIR$/type_converter/type_converter.iml" />
     </modules>
   </component>

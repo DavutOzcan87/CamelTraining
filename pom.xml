@@ -14,6 +14,7 @@
         <module>camel_rest_client</module>
         <module>agragte_restfull</module>
         <module>type_converter</module>
+        <module>soap_service</module>
     </modules>
 
     <properties>
@@ -48,6 +49,14 @@
                         <artifactItem>
                             <groupId>com.sample.cameltraining</groupId>
                             <artifactId>agragate_restfull</artifactId>
+                            <type>jar</type>
+                            <overWrite>true</overWrite>
+                            <version>1.0-SNAPSHOT</version>
+                            <outputDirectory>C:\jboss-fuse-6.3.0.redhat-187\deploy</outputDirectory>
+                        </artifactItem>
+                        <artifactItem>
+                            <groupId>com.sample.cameltraining</groupId>
+                            <artifactId>soap_service</artifactId>
                             <type>jar</type>
                             <overWrite>true</overWrite>
                             <version>1.0-SNAPSHOT</version>
