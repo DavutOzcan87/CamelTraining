@@ -20,5 +20,9 @@
             <from uri="cxf:bean:greetServiceEndpoint"></from>
             <process ref="greetServiceBean"></process>
         </route>
+        <!--<route>-->
+            <!--<from uri="direct:test"></from>-->
+            <!--<to uri="direct:test2"></to>-->
+        <!--</route>-->
     </camelContext>
 </blueprint>
